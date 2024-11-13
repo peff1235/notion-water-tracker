@@ -5,26 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Water Tracker</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        #water-tracker { font-size: 18px; }
-        .button { padding: 10px 20px; margin: 5px; cursor: pointer; }
-        .goal { font-size: 24px; margin-top: 20px; }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f2f2f2;
+            margin: 0;
+        }
+        #tracker-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        h1 {
+            color: #333;
+        }
+        .glass-button {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background: #4a90e2;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .reset-button {
+            background: #ff6b6b;
+        }
+        .goal {
+            margin-top: 15px;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
-    <h1>Water Tracker</h1>
-    <div id="water-tracker">0 / 8 glasses</div>
-    <button class="button" onclick="addGlass()">Add Glass</button>
-    <button class="button" onclick="resetGlasses()">Reset</button>
-    <div class="goal" id="goal-status"></div>
+    <div id="tracker-container">
+        <h1>Water Tracker</h1>
+        <div id="water-tracker">0 / 8 glasses</div>
+        <button class="glass-button" onclick="addGlass()">Add Glass</button>
+        <button class="glass-button reset-button" onclick="resetGlasses()">Reset</button>
+        <div class="goal" id="goal-status"></div>
+    </div>
 
     <script>
-        let glasses = 0;
         const goal = 8;
+        let glasses = parseInt(localStorage.getItem('glasses') || 0, 10);
 
         function updateTracker() {
             document.getElementById("water-tracker").innerHTML = `${glasses} / ${goal} glasses`;
-            document.getElementById("goal-status").innerHTML = glasses >= goal ? "Goal Reached!" : "Keep Going!";
+            document.getElementById("goal-status").innerHTML = glasses >= goal ? "Goal Reached! 🎉" : "Keep Going!";
+            localStorage.setItem('glasses', glasses);
         }
 
         function addGlass() {
@@ -43,4 +80,3 @@
     </script>
 </body>
 </html>
-
