@@ -81,6 +81,16 @@
             font-size: 0.9em !important;
             margin-top: 10px !important;
         }
+        #water-tracker-widget #notification {
+            display: none;
+            background-color: #ffeb3b;
+            color: #333;
+            font-size: 1em;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -99,6 +109,7 @@
             <input type="number" id="alarmInterval" min="1" placeholder="e.g., 90">
             <button class="button" onclick="setAlarm()">Set Alarm</button>
             <div id="alarmMessage"></div>
+            <div id="notification">Time to drink a glass of water!</div> <!-- New notification div -->
         </div>
     </div>
 
@@ -140,7 +151,10 @@
         }
 
         function triggerAlarm() {
-            alert("Time to drink a glass of water!");
+            document.getElementById("notification").style.display = 'block';
+            setTimeout(function() {
+                document.getElementById("notification").style.display = 'none';
+            }, 5000); // Notification stays for 5 seconds
             alarmTimeout = setTimeout(triggerAlarm, alarmInterval);
         }
 
