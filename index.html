@@ -5,105 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Water Tracker</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #1c1c1c;
-            color: #ffffff;
-            margin: 0;
-            flex-direction: column;
-        }
-        /* Circular Water Tracker */
-        .circle-tracker {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            background-color: #333;
-            border-radius: 50%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            margin-bottom: 20px;
-        }
-        .water-level {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 0;
-            background: #4a90e2;
-            border-radius: 50%;
-            animation: wave 2s infinite ease-in-out;
-        }
-        @keyframes wave {
-            0% { transform: translateY(2%); }
-            50% { transform: translateY(-2%); }
-            100% { transform: translateY(2%); }
-        }
-        .progress-text {
-            z-index: 10;
-            font-size: 16px;
-            text-align: center;
-        }
-        /* Control Buttons */
-        .tracker-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        .tracker-buttons button {
-            background-color: #4a90e2;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .tracker-buttons button:hover {
-            background-color: #3a78c2;
-        }
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .counter { font-size: 2em; color: blue; }
+        .button { font-size: 1.2em; margin: 10px; padding: 10px 20px; }
     </style>
 </head>
 <body>
+    <h1>Water Tracker</h1>
+    <div class="counter" id="counter">0</div>
+    <button class="button" onclick="increaseCount()">Drink a Glass</button>
+    <div>
+        <label for="alarmInterval">Set Reminder (minutes):</label>
+        <input type="number" id="alarmInterval" min="1" placeholder="e.g., 90">
+        <button class="button" onclick="setAlarm()">Set Alarm</button>
+    </div>
+    <div id="alarmMessage"></div>
 
-<div class="circle-tracker">
-    <div class="water-level" id="water-level"></div>
-    <div class="progress-text" id="progress-text">0 Liters<br>0% of goal</div>
-</div>
-
-<div class="tracker-buttons">
-    <button onclick="decreaseWater()">Decrease</button>
-    <button onclick="increaseWater()">Increase</button>
-</div>
-
-<script>
-    const goal = 2; // Set a goal of 2 liters
-    let liters = parseFloat(localStorage.getItem("liters") || 0);
-
-    function updateTracker() {
-        const percentage = Math.min((liters / goal) * 100, 100);
-        document.getElementById("water-level").style.height = `${percentage}%`;
-        document.getElementById("progress-text").innerHTML = `${liters.toFixed(1)} Liters<br>${Math.round(percentage)}% of goal`;
-        localStorage.setItem("liters", liters);
-    }
-
-    function increaseWater() {
-        liters += 0.25;
-        updateTracker();
-    }
-
-    function decreaseWater() {
-        liters = Math.max(0, liters - 0.25);
-        updateTracker();
-    }
-
-    updateTracker();
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>
