@@ -5,22 +5,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Water Tracker</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        .counter { font-size: 2em; color: blue; }
-        .button { font-size: 1.2em; margin: 10px; padding: 10px 20px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            background-color: #f0f4f8; 
+        }
+        .container {
+            max-width: 400px; 
+            padding: 20px; 
+            background: #fff; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        }
+        h1 {
+            font-size: 1.8em;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .counter {
+            font-size: 3em;
+            color: #007bff;
+            margin: 20px 0;
+        }
+        .button {
+            font-size: 1em;
+            margin: 10px;
+            padding: 12px 24px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .progress-bar-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .progress-bar {
+            height: 20px;
+            background-color: #007bff;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+        label, input {
+            font-size: 1em;
+            margin-top: 10px;
+            color: #333;
+        }
+        input[type="number"] {
+            width: 60%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #alarmMessage {
+            color: #007bff;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
-    <h1>Water Tracker</h1>
-    <div class="counter" id="counter">0</div>
-    <button class="button" onclick="increaseCount()">Drink a Glass</button>
-    <button class="button" onclick="resetCount()">Reset for New Day</button>
-    <div>
+    <div class="container">
+        <h1>Water Tracker</h1>
+        <div class="counter" id="counter">0</div>
+        <button class="button" onclick="increaseCount()">Drink a Glass</button>
+        <button class="button" onclick="resetCount()">Reset for New Day</button>
+        
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
         <label for="alarmInterval">Set Reminder (minutes):</label>
         <input type="number" id="alarmInterval" min="1" placeholder="e.g., 90">
         <button class="button" onclick="setAlarm()">Set Alarm</button>
+        <div id="alarmMessage"></div>
     </div>
-    <div id="alarmMessage"></div>
 
     <script src="script.js"></script>
 </body>
