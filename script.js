@@ -1,15 +1,22 @@
+// script.js
+
 let count = 0;
+let maxGlasses = 11; // Target glasses per day
 let alarmInterval;
 let alarmTimeout;
 
 function increaseCount() {
-    count++;
-    document.getElementById("counter").textContent = count;
+    if (count < maxGlasses) {
+        count++;
+        document.getElementById("counter").textContent = count;
+        updateProgressBar();
+    }
 }
 
 function resetCount() {
     count = 0;
     document.getElementById("counter").textContent = count;
+    updateProgressBar();
 }
 
 function setAlarm() {
@@ -31,4 +38,10 @@ function setAlarm() {
 function triggerAlarm() {
     alert("Time to drink a glass of water!");
     alarmTimeout = setTimeout(triggerAlarm, alarmInterval);
+}
+
+function updateProgressBar() {
+    const progressBar = document.getElementById("progressBar");
+    const progressPercentage = (count / maxGlasses) * 100;
+    progressBar.style.width = `${progressPercentage}%`;
 }
