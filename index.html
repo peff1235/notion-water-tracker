@@ -120,10 +120,11 @@
         let alarmInterval;
         let alarmTimeout;
 
-        // Load saved data from localStorage
+        // Load saved data from cookies
         window.onload = function() {
-            if (localStorage.getItem("waterCount")) {
-                count = parseInt(localStorage.getItem("waterCount"));
+            const savedCount = getCookie("waterCount");
+            if (savedCount) {
+                count = parseInt(savedCount);
                 document.getElementById("counter").textContent = count;
                 updateProgressBar();
             }
@@ -133,7 +134,7 @@
             if (count < maxGlasses) {
                 count++;
                 document.getElementById("counter").textContent = count;
-                localStorage.setItem("waterCount", count); // Save count to localStorage
+                setCookie("waterCount", count, 1); // Save count to cookies for 1 day
                 updateProgressBar();
             }
         }
@@ -141,7 +142,7 @@
         function resetCount() {
             count = 0;
             document.getElementById("counter").textContent = count;
-            localStorage.setItem("waterCount", count); // Reset count in localStorage
+            setCookie("waterCount", count, 1); // Reset count in cookies
             updateProgressBar();
         }
 
@@ -173,6 +174,29 @@
             const progressBar = document.getElementById("progressBar");
             const progressPercentage = (count / maxGlasses) * 100;
             progressBar.style.width = `${progressPercentage}%`;
+        }
+
+        // Helper functions to handle cookies
+        function setCookie(name, value, days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        function getCookie(name) {
+            const nameEq = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1, c.length);
+                }
+                if (c.indexOf(nameEq) == 0) {
+                    return c.substring(nameEq.length, c.length);
+                }
+            }
+            return "";
         }
     </script>
 </body>
