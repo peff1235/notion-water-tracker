@@ -109,7 +109,7 @@
             <input type="number" id="alarmInterval" min="1" placeholder="e.g., 90">
             <button class="button" onclick="setAlarm()">Set Alarm</button>
             <div id="alarmMessage"></div>
-            <div id="notification">Time to drink a glass of water!</div> <!-- New notification div -->
+            <div id="notification">Time to drink a glass of water!</div>
         </div>
     </div>
 
@@ -120,10 +120,20 @@
         let alarmInterval;
         let alarmTimeout;
 
+        // Load saved data from localStorage
+        window.onload = function() {
+            if (localStorage.getItem("waterCount")) {
+                count = parseInt(localStorage.getItem("waterCount"));
+                document.getElementById("counter").textContent = count;
+                updateProgressBar();
+            }
+        };
+
         function increaseCount() {
             if (count < maxGlasses) {
                 count++;
                 document.getElementById("counter").textContent = count;
+                localStorage.setItem("waterCount", count); // Save count to localStorage
                 updateProgressBar();
             }
         }
@@ -131,6 +141,7 @@
         function resetCount() {
             count = 0;
             document.getElementById("counter").textContent = count;
+            localStorage.setItem("waterCount", count); // Reset count in localStorage
             updateProgressBar();
         }
 
